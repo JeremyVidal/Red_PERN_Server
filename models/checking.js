@@ -6,12 +6,17 @@ module.exports =  (sequelize, DataTypes) => {
       },
       paymentTime: {
         type: DataTypes.TIME,
-        allowNull: false
+        allowNull: true
+	  },
+	  paymentCategory: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: false
       },
       paymentType: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
       },
       paymentName: {
         type: DataTypes.STRING,
@@ -19,7 +24,7 @@ module.exports =  (sequelize, DataTypes) => {
 	  },
 	  paymentDescription: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
 	  },
 	  paymentAmount: {
         type: DataTypes.DECIMAL(10,2),

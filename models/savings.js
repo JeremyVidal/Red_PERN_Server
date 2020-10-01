@@ -7,13 +7,18 @@ module.exports =  (sequelize, DataTypes) => {
       savingsTime: {
         type: DataTypes.TIME,
         allowNull: false
+	  },
+	  savingsCategory: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
       },
       savingsType: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
       },
-      savingstName: {
+      savingsName: {
         type: DataTypes.STRING,
         allowNull: false
 	  },

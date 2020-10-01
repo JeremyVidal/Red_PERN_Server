@@ -12,8 +12,6 @@ app.use(require('./middleware/headers'));
 
 let user = require('./controllers/usercontroller');
 app.use('/user', user);
-let account = require('./controllers/accountcontroller');
-app.use('/account', account);
 let beginBalance = require('./controllers/beginBalancecontroller');
 app.use('/beginBalance', beginBalance);
 let budget = require('./controllers/budgetcontroller');
