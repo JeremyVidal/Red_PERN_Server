@@ -11,12 +11,10 @@ module.exports =  (sequelize, DataTypes) => {
 	  savingsCategory: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       savingsType: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       savingsName: {
         type: DataTypes.STRING,

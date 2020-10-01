@@ -11,12 +11,10 @@ module.exports =  (sequelize, DataTypes) => {
 	  paymentCategory: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: false
       },
       paymentType: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: false
       },
       paymentName: {
         type: DataTypes.STRING,

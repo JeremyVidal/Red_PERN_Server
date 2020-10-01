@@ -21,7 +21,7 @@ app.use('/checkingCategories', checkingCategories);
 let checking = require('./controllers/checkingcontroller');
 app.use('/checking', checking);
 let checkingTypes = require('./controllers/checkingtypecontroller');
-app.use('/user', user);
+app.use('/checkingTypes', checkingTypes);
 let savingsCategories = require('./controllers/savingscategoriescontroller');
 app.use('/savingsCategories', savingsCategories);
 let savings = require('./controllers/savingscontroller');

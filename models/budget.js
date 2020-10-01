@@ -11,7 +11,6 @@ module.exports =  (sequelize, DataTypes) => {
       budgetCategory: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       budgetType: {
         type: DataTypes.STRING,

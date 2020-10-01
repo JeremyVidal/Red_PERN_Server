@@ -16,7 +16,11 @@ module.exports =  (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false
-      },
+	  },
+	  role: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+	  },
     })
     return User;
   }
