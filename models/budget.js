@@ -19,11 +19,7 @@ module.exports =  (sequelize, DataTypes) => {
 	  budgetAmount: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: false
-	  },
-	  userID: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
+	  }
     })
     return Budget;
   }

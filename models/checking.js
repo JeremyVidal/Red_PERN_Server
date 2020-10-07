@@ -1,37 +1,33 @@
 module.exports =  (sequelize, DataTypes) => {
     const Checking = sequelize.define("checking", {
-      paymentDate: {
+      checkingDate: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      paymentTime: {
+      checkingTime: {
         type: DataTypes.TIME,
         allowNull: true
 	  },
-	  paymentCategory: {
+	  checkingCategory: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      paymentType: {
+      checkingType: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      paymentName: {
+      checkingName: {
         type: DataTypes.STRING,
         allowNull: false
 	  },
-	  paymentDescription: {
+	  checkingDescription: {
         type: DataTypes.STRING,
         allowNull: true
 	  },
-	  paymentAmount: {
+	  checkingAmount: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: false
-	  },
-	  userID: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
+	  }
     })
     return Checking;
   }
