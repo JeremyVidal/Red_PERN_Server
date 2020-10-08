@@ -6,7 +6,8 @@ let validateSession = require("../middleware/validate-session");
 router.post("/create", validateSession, (req, res) => {
 	const beginningBalance = {
 		balance: req.body.balance,
-	  	userID: req.user.id,
+		accountType: req.body.accountType,
+	  	userId: req.user.id,
 	};
 	BeginBalance.create(beginningBalance)
 	  .then((balance) => res.status(200).json(balance))

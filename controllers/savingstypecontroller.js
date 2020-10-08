@@ -6,7 +6,7 @@ let validateSession = require("../middleware/validate-session");
 router.post("/create", validateSession, (req, res) => {
 	const savingsTypeCreate = {
 		savingsType: req.body.savingsType,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	SavingsTypes.create(savingsTypeCreate)
 	  .then((type) => res.status(200).json(type))

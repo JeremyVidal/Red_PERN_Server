@@ -3,7 +3,11 @@ module.exports =  (sequelize, DataTypes) => {
       balance: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: false
-      }
+	  },
+	  accountType: {
+		type: DataTypes.STRING,
+        allowNull: false  
+	  }
     })
     return BeginBalance;
   }

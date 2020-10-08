@@ -12,7 +12,7 @@ router.post("/create", validateSession, (req, res) => {
 		savingsName: req.body.savingsName,
 		savingsDescription: req.body.savingsDescription,
 		savingsAmount: req.body.savingsAmount,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	Savings.create(savTransaction)
 	  .then((transaction) => res.status(200).json(transaction))
@@ -40,7 +40,7 @@ router.put("/update/:id", validateSession, (req, res) => {
 		savingsAmount: req.body.savingsAmount,
 	};
   
-	const query = { where: { id: req.params.id, userID: req.user.id } };      
+	const query = { where: { id: req.params.id, userId: req.user.id } };      
   
 	Savings.update(updateSavingsTransaction, query)
 	  .then((transaction) => res.status(200).json(transaction))
