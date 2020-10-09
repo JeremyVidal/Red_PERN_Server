@@ -28,6 +28,16 @@ router.get("/:id", validateSession, (req, res) => {
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get All Transactions  -----
+router.get("/", validateSession, (req, res) => {
+	Checking.findAll({
+	  where: { userId: req.user.id },
+	})
+	.then((transactions) => res.status(200).json(transactions))
+	.catch((err) => res.status(500).json({ error: err }));
+});
+
+
 // -----  Update a Transaction  -----
 router.put("/update/:id", validateSession, (req, res) => {
 	const updateCheckingTransaction = {

@@ -87,16 +87,22 @@ router.put("/", validateSession, (req, res) => {
 });
 
 // -----  Delete User  -----
-router.delete("/", validateSession, function (req, res) {
-  	let userid = req.user.id;
+// router.delete("/", validateSession, function (req, res) {
+//   	let userid = req.user.id;
 
-  	const query = {where: {id: userid}};
+//   	const query = {where: {id: userid}};
+//   	User.destroy(query)
+//   	.then(() => res.status(200).json({ message: "User Deleted"}))
+// 	.catch((err) => res.status(500).json({error:err}));
+	  
+// });
 
-  	User.destroy(query)
-  	.then(() => res.status(200).json({ message: "User Deleted"}))
-  	.catch((err) => res.status(500).json({error:err}));
+router.delete("/:id", validateSession, function (req, res) {
+
+	const query = {where: {id: req.params.id}};
+	User.destroy(query)
+	.then(() => res.status(200).json({ message: "User Deleted"}))
+	.catch((err) => res.status(500).json({error:err}));
 });
-
-
 module.exports = router;
 
