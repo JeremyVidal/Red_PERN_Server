@@ -12,6 +12,7 @@ router.post("/create", validateSession, (req, res) => {
 		checkingName: req.body.checkingName,
 		checkingDescription: req.body.checkingDescription,
 		checkingAmount: req.body.checkingAmount,
+		checkingMonth: new Date(req.body.checkingDate).getMonth() + 1,
 	  	userId: req.user.id,
 	};
 	Checking.create(checkTransaction)
@@ -22,7 +23,7 @@ router.post("/create", validateSession, (req, res) => {
 // -----  Get a Transaction  -----
 router.get("/:id", validateSession, (req, res) => {
 	Checking.findOne({
-	  where: { id: req.params.id },
+	  where: { userId: req.params.id },
 	})
 	  .then((transaction) => res.status(200).json(transaction))
 	  .catch((err) => res.status(500).json({ error: err }));
@@ -31,7 +32,7 @@ router.get("/:id", validateSession, (req, res) => {
 // -----  Get All Transactions  -----
 router.get("/", validateSession, (req, res) => {
 	Checking.findAll({
-	  where: { userId: req.user.id },
+	  where: { userId: req.user.id, checkingMonth: new Date().getMonth() + 1 },
 	})
 	.then((transactions) => res.status(200).json(transactions))
 	.catch((err) => res.status(500).json({ error: err }));

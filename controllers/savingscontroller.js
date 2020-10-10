@@ -12,6 +12,7 @@ router.post("/create", validateSession, (req, res) => {
 		savingsName: req.body.savingsName,
 		savingsDescription: req.body.savingsDescription,
 		savingsAmount: req.body.savingsAmount,
+		savingsMonth: new Date(req.body.savingsDate).getMonth() + 1,
 	  	userId: req.user.id,
 	};
 	Savings.create(savTransaction)
@@ -31,7 +32,7 @@ router.get("/:id", validateSession, (req, res) => {
 // -----  Get All Transactions  -----
 router.get("/", validateSession, (req, res) => {
 	Savings.findAll({
-	  where: { userId: req.user.id },
+	  where: { userId: req.user.id, savingsMonth: new Date().getMonth() + 1  },
 	})
 	.then((transactions) => res.status(200).json(transactions))
 	.catch((err) => res.status(500).json({ error: err }));

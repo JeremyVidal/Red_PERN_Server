@@ -67,6 +67,15 @@ router.get("/", validateSession, (req, res) => {
 	  	.catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get Full Name  -----
+router.get("/name", validateSession, (req, res) => {
+	User.findOne({ 
+		attributes: ['firstName', 'lastName'],
+		where: {id: req.user.id } })
+	  	.then((user) => res.status(201).json(user))
+	  	.catch((err) => res.status(500).json({ error: err }));
+});
+
 // -----  Update User  -----
 router.put("/", validateSession, (req, res) => {
   	let userid = req.user.id;
