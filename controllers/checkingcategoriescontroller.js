@@ -13,6 +13,19 @@ router.post("/create", validateSession, (req, res) => {
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
+
+// -----  Get all categories  -----
+router.get("/", validateSession, (req, res) => {
+	CheckingCategories.findAll({
+		where: { userId: req.user.id },
+		order: [
+			['checkingCategory', 'ASC']
+		]
+	})
+	  .then((categories) => res.status(200).json(categories))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+
 // -----  Checking Category Delete  -----
 router.delete("/:id", (req, res) => {
 	CheckingCategories.destroy({ where: { id: req.params.id } })

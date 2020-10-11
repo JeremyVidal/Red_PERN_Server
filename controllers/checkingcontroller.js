@@ -32,7 +32,10 @@ router.get("/:id", validateSession, (req, res) => {
 // -----  Get All Transactions  -----
 router.get("/", validateSession, (req, res) => {
 	Checking.findAll({
-	  where: { userId: req.user.id, checkingMonth: new Date().getMonth() + 1 },
+	  	where: { userId: req.user.id, checkingMonth: new Date().getMonth() + 1 },
+	  	order: [
+			['checkingDate', 'DESC']
+		]
 	})
 	.then((transactions) => res.status(200).json(transactions))
 	.catch((err) => res.status(500).json({ error: err }));

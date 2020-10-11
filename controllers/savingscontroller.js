@@ -33,6 +33,9 @@ router.get("/:id", validateSession, (req, res) => {
 router.get("/", validateSession, (req, res) => {
 	Savings.findAll({
 	  where: { userId: req.user.id, savingsMonth: new Date().getMonth() + 1  },
+	  order: [
+		['savingsDate', 'DESC']
+	]
 	})
 	.then((transactions) => res.status(200).json(transactions))
 	.catch((err) => res.status(500).json({ error: err }));
