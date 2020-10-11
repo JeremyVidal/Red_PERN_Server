@@ -1,7 +1,7 @@
 module.exports =  (sequelize, DataTypes) => {
     const Savings = sequelize.define("savings", {
 	  savingsDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
       },
       savingsTime: {
@@ -26,6 +26,10 @@ module.exports =  (sequelize, DataTypes) => {
 	  },
 	  savingsAmount: {
         type: DataTypes.DECIMAL(10,2),
+        allowNull: false
+	  },
+	  savingsMonth: {
+        type: DataTypes.INTEGER,
         allowNull: false
 	  }
     })

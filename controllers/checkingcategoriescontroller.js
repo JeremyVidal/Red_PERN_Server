@@ -6,10 +6,23 @@ let validateSession = require("../middleware/validate-session");
 router.post("/create", validateSession, (req, res) => {
 	const checkingCategoriesCreate = {
 		checkingCategory: req.body.checkingCategory,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	CheckingCategories.create(checkingCategoriesCreate)
 	  .then((category) => res.status(200).json(category))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+
+
+// -----  Get all categories  -----
+router.get("/", validateSession, (req, res) => {
+	CheckingCategories.findAll({
+		where: { userId: req.user.id },
+		order: [
+			['checkingCategory', 'ASC']
+		]
+	})
+	  .then((categories) => res.status(200).json(categories))
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 

@@ -6,7 +6,7 @@ let validateSession = require("../middleware/validate-session");
 router.post("/create", validateSession, (req, res) => {
 	const savingsCategoriesCreate = {
 		savingsCategory: req.body.savingsCategory,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	SavingsCategories.create(savingsCategoriesCreate)
 	  .then((category) => res.status(200).json(category))

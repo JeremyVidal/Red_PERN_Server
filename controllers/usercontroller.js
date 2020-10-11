@@ -10,6 +10,7 @@ router.post("/signup", (req, res) => {
     	firstName: req.body.firstName,
     	lastName: req.body.lastName,
 		email: req.body.email,
+		admin: req.body.admin,
     	// password: req.body.password
     	password: bcrypt.hashSync(req.body.password, 11),
   	})
@@ -66,6 +67,15 @@ router.get("/", validateSession, (req, res) => {
 	  	.catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get Full Name  -----
+router.get("/name", validateSession, (req, res) => {
+	User.findOne({ 
+		attributes: ['firstName', 'lastName'],
+		where: {id: req.user.id } })
+	  	.then((user) => res.status(201).json(user))
+	  	.catch((err) => res.status(500).json({ error: err }));
+});
+
 // -----  Update User  -----
 router.put("/", validateSession, (req, res) => {
   	let userid = req.user.id;
@@ -86,16 +96,22 @@ router.put("/", validateSession, (req, res) => {
 });
 
 // -----  Delete User  -----
-router.delete("/", validateSession, function (req, res) {
-  	let userid = req.user.id;
+// router.delete("/", validateSession, function (req, res) {
+//   	let userid = req.user.id;
 
-  	const query = {where: {id: userid}};
+//   	const query = {where: {id: userid}};
+//   	User.destroy(query)
+//   	.then(() => res.status(200).json({ message: "User Deleted"}))
+// 	.catch((err) => res.status(500).json({error:err}));
+	  
+// });
 
-  	User.destroy(query)
-  	.then(() => res.status(200).json({ message: "User Deleted"}))
-  	.catch((err) => res.status(500).json({error:err}));
+router.delete("/:id", validateSession, function (req, res) {
+
+	const query = {where: {id: req.params.id}};
+	User.destroy(query)
+	.then(() => res.status(200).json({ message: "User Deleted"}))
+	.catch((err) => res.status(500).json({error:err}));
 });
-
-
 module.exports = router;
 

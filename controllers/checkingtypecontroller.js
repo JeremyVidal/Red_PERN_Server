@@ -6,10 +6,22 @@ let validateSession = require("../middleware/validate-session");
 router.post("/create", validateSession, (req, res) => {
 	const checkingTypeCreate = {
 		checkingType: req.body.checkingType,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	CheckingTypes.create(checkingTypeCreate)
 	  .then((type) => res.status(200).json(type))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+
+// -----  Get all Types  -----
+router.get("/", validateSession, (req, res) => {
+	CheckingTypes.findAll({
+		where: { userId: req.user.id },
+		order: [
+			['checkingType', 'ASC']
+		]
+	})
+	  .then((types) => res.status(200).json(types))
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 

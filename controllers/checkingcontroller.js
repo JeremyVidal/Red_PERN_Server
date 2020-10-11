@@ -5,14 +5,15 @@ let validateSession = require("../middleware/validate-session");
 // -----  Checking Transaction Create  -----
 router.post("/create", validateSession, (req, res) => {
 	const checkTransaction = {
-		paymentDate: req.body.paymentDate,
-		paymentTime: req.body.paymentTime,
-		paymentCategory: req.body.paymentCategory,
-		paymentType: req.body.paymentType,
-		paymentName: req.body.paymentName,
-		paymentDescription: req.body.paymentDescription,
-		paymentAmount: req.body.paymentAmount,
-	  	userID: req.user.id,
+		checkingDate: req.body.checkingDate,
+		checkingTime: req.body.checkingTime,
+		checkingCategory: req.body.checkingCategory,
+		checkingType: req.body.checkingType,
+		checkingName: req.body.checkingName,
+		checkingDescription: req.body.checkingDescription,
+		checkingAmount: req.body.checkingAmount,
+		checkingMonth: new Date(req.body.checkingDate).getMonth() + 1,
+	  	userId: req.user.id,
 	};
 	Checking.create(checkTransaction)
 	  .then((transaction) => res.status(200).json(transaction))
@@ -22,25 +23,38 @@ router.post("/create", validateSession, (req, res) => {
 // -----  Get a Transaction  -----
 router.get("/:id", validateSession, (req, res) => {
 	Checking.findOne({
-	  where: { id: req.params.id },
+	  where: { userId: req.params.id },
 	})
 	  .then((transaction) => res.status(200).json(transaction))
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get All Transactions  -----
+router.get("/", validateSession, (req, res) => {
+	Checking.findAll({
+	  	where: { userId: req.user.id, checkingMonth: new Date().getMonth() + 1 },
+	  	order: [
+			['checkingDate', 'DESC']
+		]
+	})
+	.then((transactions) => res.status(200).json(transactions))
+	.catch((err) => res.status(500).json({ error: err }));
+});
+
+
 // -----  Update a Transaction  -----
 router.put("/update/:id", validateSession, (req, res) => {
 	const updateCheckingTransaction = {
-		paymentDate: req.body.paymentDate,
-		paymentTime: req.body.paymentTime,
-		paymentCategory: req.body.paymentCategory,
-		paymentType: req.body.paymentType,
-		paymentName: req.body.paymentName,
-		paymentDescription: req.body.paymentDescription,
-		paymentAmount: req.body.paymentAmount,
+		checkingDate: req.body.checkingDate,
+		checkingTime: req.body.checkingTime,
+		checkingCategory: req.body.checkingCategory,
+		checkingType: req.body.checkingType,
+		checkingName: req.body.checkingName,
+		checkingDescription: req.body.checkingDescription,
+		checkingAmount: req.body.checkingAmount,
 	};
   
-	const query = { where: { id: req.params.id, userID: req.user.id } };      
+	const query = { where: { id: req.params.id, userId: req.user.id } };      
   
 	Checking.update(updateCheckingTransaction, query)
 	  .then((transaction) => res.status(200).json(transaction))

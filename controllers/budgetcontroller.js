@@ -10,7 +10,7 @@ router.post("/create", validateSession, (req, res) => {
 		budgetCategory: req.body.budgetCategory,
 		budgetType: req.body.budgetType,
 		budgetAmount: req.body.budgetAmount,
-	  	userID: req.user.id,
+	  	userId: req.user.id,
 	};
 	Budget.create(budgetCreate)
 	  .then((budget) => res.status(200).json(budget))
@@ -20,7 +20,7 @@ router.post("/create", validateSession, (req, res) => {
 // -----  Get a Budget Item  -----
 router.get("/", validateSession, (req, res) => {
 	Budget.findAll({
-	  where: { userID: req.user.id },
+	  where: { userId: req.user.id },
 	})
 	  .then((transaction) => res.status(200).json(transaction))
 	  .catch((err) => res.status(500).json({ error: err }));
