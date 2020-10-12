@@ -10,7 +10,7 @@ router.post("/signup", (req, res) => {
     	firstName: req.body.firstName,
     	lastName: req.body.lastName,
 		email: req.body.email,
-		admin: req.body.admin,
+		admin: false,
     	// password: req.body.password
     	password: bcrypt.hashSync(req.body.password, 11),
   	})
@@ -76,7 +76,7 @@ router.get("/name", validateSession, (req, res) => {
 	  	.catch((err) => res.status(500).json({ error: err }));
 });
 
-// -----  Update User  -----
+// -----  Update User Information -----
 router.put("/", validateSession, (req, res) => {
   	let userid = req.user.id;
 
@@ -85,33 +85,45 @@ router.put("/", validateSession, (req, res) => {
 	  	lastName: req.body.lastName,
 	  	email: req.body.email,
 	};
-	if (req.body.password != ''){
-		updateUser.password = bcrypt.hashSync(req.body.password, 11)
-		console.log(req.body.password)
-	}
   	const query = { where: {id: userid} };
   	User.update(updateUser, query)
     	.then((user) => res.status(201).json({ message: `${user} records updated` }))
     	.catch((err) => res.status(500).json({ error: err }));
 });
+// -----  Update Password Information -----
+router.put("/pass", validateSession, (req, res) => {
+	let userid = req.user.id;
+
+	const updatePass={
+		password: bcrypt.hashSync(req.body.password, 11),
+  	};
+	const query = { where: {id: userid} };
+	User.update(updatePass, query)
+	  .then((user) => res.status(201).json({ message: `${user} records updated` }))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+// -----  Update Password  -----
+
+
+
 
 // -----  Delete User  -----
-// router.delete("/", validateSession, function (req, res) {
-//   	let userid = req.user.id;
+router.delete("/", validateSession, function (req, res) {
+  	let userid = req.user.id;
 
-//   	const query = {where: {id: userid}};
-//   	User.destroy(query)
-//   	.then(() => res.status(200).json({ message: "User Deleted"}))
-// 	.catch((err) => res.status(500).json({error:err}));
-	  
-// });
-
-router.delete("/:id", validateSession, function (req, res) {
-
-	const query = {where: {id: req.params.id}};
-	User.destroy(query)
-	.then(() => res.status(200).json({ message: "User Deleted"}))
+  	const query = {where: {id: userid}};
+  	User.destroy(query)
+  	.then(() => res.status(200).json({ message: "User Deleted"}))
 	.catch((err) => res.status(500).json({error:err}));
+	  
 });
+
+// router.delete("/:id", validateSession, function (req, res) {
+
+// 	const query = {where: {id: req.params.id}};
+// 	User.destroy(query)
+// 	.then(() => res.status(200).json({ message: "User Deleted"}))
+// 	.catch((err) => res.status(500).json({error:err}));
+// });
 module.exports = router;
 

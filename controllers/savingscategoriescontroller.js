@@ -13,6 +13,18 @@ router.post("/create", validateSession, (req, res) => {
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get all categories  -----
+router.get("/", validateSession, (req, res) => {
+	SavingsCategories.findAll({
+		where: { userId: req.user.id },
+		order: [
+			['savingsCategory', 'ASC']
+		]
+	})
+	  .then((categories) => res.status(200).json(categories))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+
 // -----  Savings Category Delete  -----
 router.delete("/:id", (req, res) => {
 	SavingsCategories.destroy({ where: { id: req.params.id } })
