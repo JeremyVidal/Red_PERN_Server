@@ -34,7 +34,8 @@ router.get("/", validateSession, (req, res) => {
 	Savings.findAll({
 	  where: { userId: req.user.id, savingsMonth: new Date().getMonth() + 1  },
 	  order: [
-		['savingsDate', 'DESC']
+		['savingsDate', 'DESC'],
+		['savingsTime', 'DESC'],
 	]
 	})
 	.then((transactions) => res.status(200).json(transactions))

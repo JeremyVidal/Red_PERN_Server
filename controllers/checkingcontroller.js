@@ -23,7 +23,7 @@ router.post("/create", validateSession, (req, res) => {
 // -----  Get a Transaction  -----
 router.get("/:id", validateSession, (req, res) => {
 	Checking.findOne({
-	  where: { userId: req.params.id },
+	  where: { id: req.params.id },
 	})
 	  .then((transaction) => res.status(200).json(transaction))
 	  .catch((err) => res.status(500).json({ error: err }));
@@ -34,8 +34,9 @@ router.get("/", validateSession, (req, res) => {
 	Checking.findAll({
 	  	where: { userId: req.user.id, checkingMonth: new Date().getMonth() + 1 },
 	  	order: [
-			['checkingDate', 'DESC']
-		]
+			['checkingDate', 'DESC'],
+			['checkingTime', 'DESC'],
+			]
 	})
 	.then((transactions) => res.status(200).json(transactions))
 	.catch((err) => res.status(500).json({ error: err }));
@@ -54,7 +55,7 @@ router.put("/update/:id", validateSession, (req, res) => {
 		checkingAmount: req.body.checkingAmount,
 	};
   
-	const query = { where: { id: req.params.id, userId: req.user.id } };      
+	const query = { where: { id: req.params.id } };      
   
 	Checking.update(updateCheckingTransaction, query)
 	  .then((transaction) => res.status(200).json(transaction))

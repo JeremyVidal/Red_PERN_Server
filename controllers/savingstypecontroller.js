@@ -18,7 +18,7 @@ router.get("/", validateSession, (req, res) => {
 	SavingsTypes.findAll({
 		where: { userId: req.user.id },
 		order: [
-			['savingsType', 'ASC']
+			['savingsType', 'ASC'],
 		]
 	})
 	  .then((types) => res.status(200).json(types))

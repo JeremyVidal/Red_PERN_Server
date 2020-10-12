@@ -17,19 +17,20 @@ router.post("/create", validateSession, (req, res) => {
 // -----  Get beginBalance  -----
 router.get("/", validateSession, (req, res) => {
 	BeginBalance.findOne({
-	  where: { id: req.user.id },
+	  where: { userId: req.user.id },
 	})
 	  .then((balance) => res.status(200).json(balance))
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
 // -----  Update beginBalance  -----
-router.put("/update/:id", validateSession, (req, res) => {
+router.put("/update", validateSession, (req, res) => {
 	const updateBeginBalance = {
-		balance: req.body.balance,
+		checking: req.body.checking,
+		savings: req.body.savings
 	};
   
-	const query = { where: { id: req.params.id } };      
+	const query = { where: { userId: req.user.id  } };      
   
 	BeginBalance.update(updateBeginBalance, query)
 	  .then((balance) => res.status(200).json(balance))

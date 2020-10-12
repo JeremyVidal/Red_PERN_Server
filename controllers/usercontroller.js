@@ -81,30 +81,20 @@ router.put("/", validateSession, (req, res) => {
   	let userid = req.user.id;
 
   	const updateUser={
-	  	firstName: req.body.firstName,
-	  	lastName: req.body.lastName,
-	  	email: req.body.email,
-	};
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		email: req.body.email,
+  };
+  if (req.body.password != ''){
+	  updateUser.password = bcrypt.hashSync(req.body.password, 11)
+	//   console.log(req.body.password)
+  }
+
   	const query = { where: {id: userid} };
   	User.update(updateUser, query)
     	.then((user) => res.status(201).json({ message: `${user} records updated` }))
     	.catch((err) => res.status(500).json({ error: err }));
 });
-// -----  Update Password Information -----
-router.put("/pass", validateSession, (req, res) => {
-	let userid = req.user.id;
-
-	const updatePass={
-		password: bcrypt.hashSync(req.body.password, 11),
-  	};
-	const query = { where: {id: userid} };
-	User.update(updatePass, query)
-	  .then((user) => res.status(201).json({ message: `${user} records updated` }))
-	  .catch((err) => res.status(500).json({ error: err }));
-});
-// -----  Update Password  -----
-
-
 
 
 // -----  Delete User  -----
