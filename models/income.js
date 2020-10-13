@@ -1,5 +1,5 @@
 module.exports =  (sequelize, DataTypes) => {
-    const Income = sequelize.define("budget", {
+    const Income = sequelize.define("income", {
       	incomeSource: {
         	type: DataTypes.STRING,
         	allowNull: false

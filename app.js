@@ -30,7 +30,8 @@ let savingsTypes = require('./controllers/savingstypecontroller');
 app.use('/savingsTypes', savingsTypes);
 let income = require('./controllers/incomecontroller');
 app.use('/income', income);
-
+let totals = require('./controllers/totalscontroller');
+app.use('/totals', totals);
 
 
 

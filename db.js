@@ -14,7 +14,6 @@ sequelize.authenticate().then(
 	}
 );
 
-
 BeginBalance = sequelize.import('./models/beginBalance');
 Budget = sequelize.import('./models/budget');
 Checking = sequelize.import('./models/checking');
@@ -25,9 +24,6 @@ SavingsCategories = sequelize.import('./models/savingsCategories');
 SavingsTypes = sequelize.import('./models/savingsTypes');
 User = sequelize.import('./models/user');
 Income = sequelize.import('./models/income');
-
-User.hasMany(Income);
-Income.belongsTo(User);
 
 User.hasOne(BeginBalance);
 BeginBalance.belongsTo(User);
@@ -52,5 +48,8 @@ SavingsCategories.belongsTo(User);
 
 User.hasMany(SavingsTypes);
 SavingsTypes.belongsTo(User);
+
+User.hasMany(Income);
+Income.belongsTo(User);
 
 module.exports = sequelize;
