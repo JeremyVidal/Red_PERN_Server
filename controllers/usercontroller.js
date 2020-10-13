@@ -102,7 +102,11 @@ router.get("/name", validateSession, (req, res) => {
 router.get("/all", (req, res) => {
 	User.findAll({
 		attributes: ['id','firstName', 'lastName', 'email', 'admin'],
-		where: {admin: false}})
+		where: {admin: false},
+		order: [
+			['lastName', 'ASC'],
+		]
+	})
 	  	.then((user) => res.status(201).json(user))
 	  	.catch((err) => res.status(500).json({ error: err }));
 });

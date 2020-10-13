@@ -24,7 +24,10 @@ Savings = sequelize.import('./models/savings');
 SavingsCategories = sequelize.import('./models/savingsCategories');
 SavingsTypes = sequelize.import('./models/savingsTypes');
 User = sequelize.import('./models/user');
+Income = sequelize.import('./models/income');
 
+User.hasMany(Income);
+Income.belongsTo(User);
 
 User.hasOne(BeginBalance);
 BeginBalance.belongsTo(User);
