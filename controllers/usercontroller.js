@@ -15,7 +15,7 @@ router.post("/signup", (req, res) => {
     	password: bcrypt.hashSync(req.body.password, 11),
   	})
     .then((user) => {
-      	let token = jwt.sign({ id: user.id }, process.env.SECRETKEY, {
+      	let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         	expiresIn: "1d",
       	});
       	res.json({
@@ -38,7 +38,7 @@ router.post("/admin", (req, res) => {
 	  password: bcrypt.hashSync(req.body.password, 11),
 	})
   .then((user) => {
-		let token = jwt.sign({ id: user.id }, process.env.SECRETKEY, {
+		let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
 		  expiresIn: "1d",
 		});
 		res.json({
@@ -58,7 +58,7 @@ router.post("/login", (req, res) => {
 					if (matches){
 						let token = jwt.sign(
 							{ id: user.id },
-							process.env.SECRETKEY,
+							process.env.JWT_SECRET,
 							{
 								expiresIn: "1d",
 							}
