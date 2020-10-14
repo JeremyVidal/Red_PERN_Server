@@ -13,6 +13,18 @@ router.post("/create", validateSession, (req, res) => {
 	  .catch((err) => res.status(500).json({ error: err }));
 });
 
+// -----  Get all Types  -----
+router.get("/", validateSession, (req, res) => {
+	SavingsTypes.findAll({
+		where: { userId: req.user.id },
+		order: [
+			['savingsType', 'ASC'],
+		]
+	})
+	  .then((types) => res.status(200).json(types))
+	  .catch((err) => res.status(500).json({ error: err }));
+});
+
 // -----  Savings Type Delete  -----
 router.delete("/:id", (req, res) => {
 	SavingsTypes.destroy({ where: { id: req.params.id } })
